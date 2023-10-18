@@ -5,7 +5,7 @@
  */
 public class DiceCup {
 	private int die1, die2;
-	private int[] availableMoves; // this will be four numbers, though positions 
+	private int[] availableMoves = {0, 0, 0, 0}; // this will be four numbers, though positions
 								 //     2 and 3 will often be zero.
 	
 	public DiceCup()
@@ -29,7 +29,16 @@ public class DiceCup {
 	{
 		//--------------------
 		// TODO: insert your code here.
-		
+		int equalVariable = 0;
+		if (isDoubles(die1, die2)) {
+			equalVariable = die1;
+		} else {
+			equalVariable = 0;
+		}
+		availableMoves[0] = die1;
+		availableMoves[1] = die2;
+		availableMoves[2] = equalVariable;
+		availableMoves[3] = equalVariable;
 		//--------------------
 	}
 	/**
@@ -45,6 +54,9 @@ public class DiceCup {
 		// Hint: (int)(Math.random()*10) gives a random number from 0 to 9, inclusive.
 		// Hint: write calculateAvailableMoves() before you write this one.
 		//--------------------
+		die1 = (int)(Math.random()*6) + 1;
+		die2 = (int)(Math.random()*6) + 1;
+		calculateAvailableMoves();
 	}
 	/**
 	 * returns a string describing the dice, the available (non-zero) moves and whether this 
@@ -67,9 +79,12 @@ public class DiceCup {
 	public String toString()
 	{
 		String result = "";
+		String[] diceEmojis = {null, "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"};
 		//--------------------
 		// TODO: insert your code here.
-		
+		for (int i = 0; i < 4; i++) {
+			result += diceEmojis[availableMoves[i]];
+		}
 		//--------------------
 		return result;
 		
@@ -92,12 +107,14 @@ public class DiceCup {
 	 * isDoubles - indicates whether the two dice match.
 	 * @return
 	 */
-	public boolean isDoubles()
+	public boolean isDoubles(int die1, int die2)
 	{
 		boolean doubles = false;
 		//--------------------
 		// TODO: insert your code here.
-		
+		if (die1 == die2) {
+			doubles = true;
+		}
 		//--------------------
 		return doubles;
 	}

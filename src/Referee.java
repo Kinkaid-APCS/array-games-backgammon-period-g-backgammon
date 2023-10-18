@@ -8,17 +8,18 @@ public class Referee {
 	// TODO: decide which private member variables the Referee should have and declare them here.
 	// suggestion: the dice are an array of integers, typically 1-6, where 0 means unrolled or 
 	// used up already.
-	private int[] diceValues = {0, 1, 2, 3, 4, 5, 6};
-	public boolean continuePlaying = true;
-	DiceCup blackCup = new DiceCup();
-	DiceCup whiteCup = new DiceCup();
-	Board board = new Board();
+	private boolean continuePlaying = true;
+	private DiceCup blackCup;
+	private DiceCup whiteCup;
+	private Board board;
 	/**
 	 * constructor - set up the board and players 
 	 */
 	// TODO: you write the Referee's constructor
 	Referee() {
-
+		blackCup = new DiceCup();
+		whiteCup = new DiceCup();
+		board = new Board();
 	}
 	/**
 	 * playGame - the main game loop. Roll the dice, ask the user for a
@@ -28,8 +29,8 @@ public class Referee {
 	public void playGame()
 	{
 		// TODO: you write the Referee's playGame method.
-		while (continuePlaying == true) {
-
-		}
+		blackCup.roll();
+		System.out.println("s");
+		System.out.println(blackCup.toString());
 	}
 }
