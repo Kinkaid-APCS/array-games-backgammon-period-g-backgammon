@@ -5,6 +5,7 @@
  */
 public class Board {
 	//something
+	// test
 	// TODO: decide which private member variables the Board class needs, and declare them here.
 	// suggestion - for the 24 spaces, I suggest an array that holds the number
 	// of pieces on each square. One player will have positive numbers, and
