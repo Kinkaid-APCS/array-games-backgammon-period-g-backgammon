@@ -18,15 +18,36 @@ public class Board {
 	// don't go to position 0. On the other hand if a "positive-moving" piece is
 	// captured, it goes to position 0, the farthest point from it's goal of 25 or
 	// more.
-	
+	private int[] boardArray;
+	private String blackChar;
+	private String whiteChar;
 	/**
 	 * constructor - set up the starting locations of the pieces.
 	 */
 	public Board()
 	{
-		//--------------------
-		
-		//--------------------
+		blackChar = "⚫";
+		whiteChar = "⚪";
+		boardArray = new int[26];
+		for (int i = 0; i < boardArray.length; i++) {
+			if (i == 1) {
+				//positive is white
+				boardArray[i] = 2;
+			} else if (i == 6 || i == 13) {
+				//negative is black
+				boardArray[i] = -5;
+			} else if (i == 12 || i == 19) {
+				boardArray[i] = 5;
+			} else if (i == 8) {
+				boardArray[i] = -3;
+			} else if (i == 17) {
+				boardArray[i] = 3;
+			} else if (i == 24) {
+				boardArray[i] = -2;
+			} else {
+				boardArray[i] = 0;
+			}
+		}
 	}
 	
 	/**
@@ -48,8 +69,22 @@ public class Board {
 	public String toString()
 	{
 		String result = "";
+		String bar;
 		//--------------------
-		// TODO: insert your code here.
+		for (int i = 0; i < boardArray.length; i ++) {
+			bar = "";
+			if (i == 0 || i == 25) {
+				bar = "(BAR) ";
+			}
+			result += "\n " + i + " " + bar;
+			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
+				if (boardArray[i] > 0) {
+					result += whiteChar;
+				} else {
+					result += blackChar;
+				}
+			}
+		}
 		
 		//--------------------
 		return result;
