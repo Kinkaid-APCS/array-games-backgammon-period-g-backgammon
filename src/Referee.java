@@ -12,6 +12,7 @@ public class Referee {
 	private DiceCup blackCup;
 	private DiceCup whiteCup;
 	private Board board;
+	private boolean whiteTurn = false;
 	/**
 	 * constructor - set up the board and players 
 	 */
@@ -20,6 +21,9 @@ public class Referee {
 		blackCup = new DiceCup();
 		whiteCup = new DiceCup();
 		board = new Board();
+		if ((int)(Math.random() * 2) == 0 ) {
+			whiteTurn = true;
+		}
 	}
 	/**
 	 * playGame - the main game loop. Roll the dice, ask the user for a
@@ -29,7 +33,15 @@ public class Referee {
 	public void playGame()
 	{
 		// TODO: you write the Referee's playGame method.
-		blackCup.roll();
-		System.out.println(blackCup.toString());
+		while (continuePlaying) {
+			if (!whiteTurn) {
+				blackCup.roll();
+				System.out.println(blackCup.toString());
+			} else {
+				whiteCup.roll();
+				System.out.println(whiteCup.toString());
+			}
+
+		}
 	}
 }
