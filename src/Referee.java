@@ -24,24 +24,25 @@ public class Referee {
 		if ((int)(Math.random() * 2) == 0 ) {
 			whiteTurn = true;
 		}
+		System.out.println(board.toString());
 	}
 	/**
 	 * playGame - the main game loop. Roll the dice, ask the user for a
 	 * move, determine whether it is legal, and then execute the move. 
 	 * Repeat for any remaining dice.
 	 */
+
 	public void playGame()
 	{
-		// TODO: you write the Referee's playGame method.
-		while (continuePlaying) {
-			if (!whiteTurn) {
-				blackCup.roll();
-				System.out.println(blackCup.toString());
-			} else {
-				whiteCup.roll();
-				System.out.println(whiteCup.toString());
-			}
-
-		}
+//		while (continuePlaying) {
+//			if (!whiteTurn) {
+//				blackCup.roll();
+//				System.out.println(blackCup.toString());
+//			} else {
+//				whiteCup.roll();
+//				System.out.println(whiteCup.toString());
+//			}
+//
+//		}
 	}
 }
