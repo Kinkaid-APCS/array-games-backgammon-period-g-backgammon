@@ -34,6 +34,7 @@ public class Referee {
 	{
 		// TODO: you write the Referee's playGame method.
 		while (continuePlaying) {
+			board.toString();
 			if (!whiteTurn) {
 				blackCup.roll();
 				System.out.println(blackCup.toString());
