@@ -79,13 +79,21 @@ public class DiceCup {
 	public String toString()
 	{
 		String result = "";
-		String[] diceEmojis = {null, "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"};
-
+		String[] diceEmojis = {"", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"};
 		//--------------------
 		// TODO: insert your code here.
 		for (int i = 0; i < 4; i++) {
-			result += diceEmojis[availableMoves[i]];
+			if (availableMoves[i] != 0) {
+				result += diceEmojis[availableMoves[i]] + " ";
+			}
 		}
+		result += ": ";
+		for (int i = 0; i < 4; i++) {
+			if (availableMoves[i] != 0) {
+				result += availableMoves[i] + " ";
+			}
+		}
+
 		//--------------------
 		return result;
 		
