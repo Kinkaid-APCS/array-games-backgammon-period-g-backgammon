@@ -80,6 +80,7 @@ public class DiceCup {
 	{
 		String result = "";
 		String[] diceEmojis = {null, "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"};
+
 		//--------------------
 		// TODO: insert your code here.
 		for (int i = 0; i < 4; i++) {

@@ -30,7 +30,6 @@ public class Referee {
 	{
 		// TODO: you write the Referee's playGame method.
 		blackCup.roll();
-		System.out.println("s");
 		System.out.println(blackCup.toString());
 	}
 }
