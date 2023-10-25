@@ -36,17 +36,17 @@ public class Referee {
 	public void playGame()
 	{
 		while (continuePlaying) {
-			board.toString();
+			System.out.println(board.toString());
 			if(whiteTurn) {
 				whiteCup.roll();
 				System.out.println(whiteCup.toString());
 				while (whiteCup.hasMovesLeft() && board.anySpacesAvailable(whiteCup)) {
 					int move = whichMove();
-					int location = whichLocation();
+					int location = whichLocation(1);
 					while (!board.isLegal(location, move) && !whiteCup.isLegal(move)) {
 						System.out.println("Not a valid move.");
 						move = whichMove();
-						location = whichLocation();
+						location = whichLocation(1);
 					}
 					board.makeMove(location, move);
 				}
@@ -65,12 +65,18 @@ public class Referee {
 		sc.close();
 		return input;
 	}
-
-	public int whichLocation() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Choose location: ");
-		int input = sc.nextInt();
-		sc.close();
-		return input;
+	//parameter player is positive or negative based on whether white or black is going
+	public int whichLocation(int player) {
+		int loc;
+		if (player > 0 && board.boardArray[0] > 0) {
+			loc = 0;
+			System.out.println("You are playing from the bar.");
+		} else {
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Choose location: ");
+			loc = sc.nextInt();
+			sc.close();
+		}
+		return loc;
 	}
 }

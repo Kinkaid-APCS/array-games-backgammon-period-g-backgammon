@@ -18,7 +18,7 @@ public class Board {
 	// don't go to position 0. On the other hand if a "positive-moving" piece is
 	// captured, it goes to position 0, the farthest point from it's goal of 25 or
 	// more.
-	private int[] boardArray;
+	public int[] boardArray;
 	private String blackChar;
 	private String whiteChar;
 	/**
