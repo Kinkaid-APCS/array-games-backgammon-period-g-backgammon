@@ -4,7 +4,7 @@
  *
  */
 public class DiceCup {
-	public int player; //if positive then white, if negative then black
+	public int player; //if +1 then white, if -1 then black
 	private int die1, die2;
 	private int[] availableMoves; // this will be four numbers, though positions
 								 //     2 and 3 will often be zero.

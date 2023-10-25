@@ -38,21 +38,33 @@ public class Referee {
 		while (continuePlaying) {
 			System.out.println(board.toString());
 			if(whiteTurn) {
+				System.out.println("White's Turn");
 				whiteCup.roll();
 				System.out.println(whiteCup.toString());
 				while (whiteCup.hasMovesLeft() && board.anySpacesAvailable(whiteCup, board)) {
 					int move = whichMove();
-					int location = whichLocation(1);
+					int location = whichLocation(whiteCup);
 					while (!board.isLegal(location, move) && !whiteCup.isLegal(move)) {
 						System.out.println("Not a valid move.");
 						move = whichMove();
-						location = whichLocation(1);
+						location = whichLocation(whiteCup);
 					}
 					board.makeMove(location, move);
 				}
 			} else {
+				System.out.println("Black's Turn");
 				blackCup.roll();
 				System.out.println(blackCup.toString());
+				while (blackCup.hasMovesLeft() && board.anySpacesAvailable(blackCup, board)) {
+					int move = whichMove();
+					int location = whichLocation(blackCup);
+					while (!board.isLegal(location, move) && !blackCup.isLegal(move)) {
+						System.out.println("Not a valid move.");
+						move = whichMove();
+						location = whichLocation(blackCup);
+					}
+					board.makeMove(location, move);
+				}
 			}
 
 		}
@@ -66,12 +78,12 @@ public class Referee {
 		return input;
 	}
 	//parameter player is positive or negative based on whether white or black is going
-	public int whichLocation(int player) {
+	public int whichLocation(DiceCup player) {
 		int loc;
-		if (player > 0 && board.boardArray[0] > 0) {
+		if (player.player > 0 && board.boardArray[0] > 0) {
 			loc = 0;
 			System.out.println("You are playing from the bar.");
-		} else if (player < 0 && board.boardArray[25] < 0) {
+		} else if (player.player < 0 && board.boardArray[25] < 0) {
 			loc = 0;
 			System.out.println("You are playing from the bar.");
 		} else {

@@ -209,6 +209,16 @@ public class Board {
 		} else {
 			for (int i : player.debugGetAvailableMoves()) {
 				for (int j = 0; j < boardArray.length; j++) {
+					if (player.player > 0) {
+						while (boardArray[j] < 1 && j < 25) {
+							j++;
+						}
+					}
+					if (player.player < 0) {
+						while (boardArray[j] > -1 && j < 25) {
+							j++;
+						}
+					}
 					if (isLegal(j, i)) {
 						anyMoves = true;
 						break;
