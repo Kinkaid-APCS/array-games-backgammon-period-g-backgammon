@@ -196,13 +196,23 @@ public class Board {
 		return teamWins;
 	}
 
-	public boolean anySpacesAvailable(DiceCup player) {
+	public boolean anySpacesAvailable(DiceCup player, Board board) {
 		boolean anyMoves = false;
-		for (int i : player.debugGetAvailableMoves()) {
-			for (int j = 0; j < boardArray.length; j++) {
-				if (isLegal(j, i)){
-					anyMoves = true;
-					break;
+		if (player.player > 0 && board.boardArray[0] > 0) {
+			for (int i: player.debugGetAvailableMoves()) {
+				anyMoves = isLegal(0, i);
+			}
+		} else if (player.player < 0 && board.boardArray[25] < 0) {
+			for (int i: player.debugGetAvailableMoves()) {
+				anyMoves = isLegal(25, i);
+			}
+		} else {
+			for (int i : player.debugGetAvailableMoves()) {
+				for (int j = 0; j < boardArray.length; j++) {
+					if (isLegal(j, i)) {
+						anyMoves = true;
+						break;
+					}
 				}
 			}
 		}

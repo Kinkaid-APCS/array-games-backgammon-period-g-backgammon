@@ -40,7 +40,7 @@ public class Referee {
 			if(whiteTurn) {
 				whiteCup.roll();
 				System.out.println(whiteCup.toString());
-				while (whiteCup.hasMovesLeft() && board.anySpacesAvailable(whiteCup)) {
+				while (whiteCup.hasMovesLeft() && board.anySpacesAvailable(whiteCup, board)) {
 					int move = whichMove();
 					int location = whichLocation(1);
 					while (!board.isLegal(location, move) && !whiteCup.isLegal(move)) {
@@ -69,6 +69,9 @@ public class Referee {
 	public int whichLocation(int player) {
 		int loc;
 		if (player > 0 && board.boardArray[0] > 0) {
+			loc = 0;
+			System.out.println("You are playing from the bar.");
+		} else if (player < 0 && board.boardArray[25] < 0) {
 			loc = 0;
 			System.out.println("You are playing from the bar.");
 		} else {
