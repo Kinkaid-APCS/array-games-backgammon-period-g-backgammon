@@ -52,7 +52,7 @@ public class Referee {
 					board.makeMove(location, move);
 				}
 			} else {
-				System.out.println("Black's Turn");
+				System.out.println("Brown's Turn"); //actually black, but brown looks better
 				blackCup.roll();
 				System.out.println(blackCup.toString());
 				while (blackCup.hasMovesLeft() && board.anySpacesAvailable(blackCup, board)) {

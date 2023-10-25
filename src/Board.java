@@ -26,7 +26,7 @@ public class Board {
 	 */
 	public Board()
 	{
-		blackChar = "⚫";
+		blackChar = "🟤";
 		whiteChar = "⚪";
 		boardArray = new int[26];
 		for (int i = 0; i < boardArray.length; i++) {
