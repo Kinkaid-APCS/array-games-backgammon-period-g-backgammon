@@ -68,7 +68,7 @@ public class Board {
 	 */
 	public String toString()
 	{
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		String bar;
 		//--------------------
 		for (int i = 0; i < boardArray.length; i ++) {
@@ -76,38 +76,30 @@ public class Board {
 			if (i == 0 || i == 25) {
 				bar = "(BAR) ";
 			}
-			result += "\n " + i + " " + bar;
+			result.append("\n ").append(i).append(" ").append(bar);
 			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
 				if (boardArray[i] > 0) {
-					result += whiteChar;
+					result.append(whiteChar);
 				} else {
-					result += blackChar;
+					result.append(blackChar);
 				}
 			}
 		}
 		
 		//--------------------
-		return result;
+		return result.toString();
 	}
 	
 	/**
 	 * playerHasPieceAtLocation - determines whether the player has at 
 	 * least one chip at the given space.
-	 * @param whichPlayer - this can be -1 or 1.
 	 * @param location - the number of the space in question.
 	 * @return whether (true/false) the player has a chip of his/her own 
 	 * color at this space.
 	 */
-	public boolean playerHasPieceAtLocation(int whichPlayer, int location)
+	public int howManyPieceAtLocation(int location)
 	{
-		boolean hasPiece = false;
-		//--------------------
-		// TODO: insert your code here.
-		// Hint: while you can do this with a couple of if statements, you can also
-		//       do a clever math trick here by multiplying whichPlayer and the number
-		//       of chips at location...
-		//--------------------
-		return hasPiece;
+		return boardArray[location];
 	}
 	
 	/**
@@ -123,10 +115,16 @@ public class Board {
 	public boolean isLegal(int startingSpace, int numSpaces)
 	{
 		boolean legal = false;
-		//--------------------
-		// TODO: insert your code here.
-		
-		//--------------------
+		if (numSpaces > 0) {
+			if (boardArray[startingSpace + numSpaces] > -2) {
+				legal = true;
+			}
+		}
+		if (numSpaces < 0) {
+			if (boardArray[startingSpace + numSpaces] < 2) {
+				legal = true;
+			}
+		}
 		return legal;
 		
 	}

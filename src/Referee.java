@@ -24,7 +24,6 @@ public class Referee {
 		if ((int)(Math.random() * 2) == 0 ) {
 			whiteTurn = true;
 		}
-		System.out.println(board.toString());
 	}
 	/**
 	 * playGame - the main game loop. Roll the dice, ask the user for a
@@ -34,15 +33,15 @@ public class Referee {
 
 	public void playGame()
 	{
-//		while (continuePlaying) {
-//			if (!whiteTurn) {
-//				blackCup.roll();
-//				System.out.println(blackCup.toString());
-//			} else {
-//				whiteCup.roll();
-//				System.out.println(whiteCup.toString());
-//			}
-//
-//		}
+		while (continuePlaying) {
+			if (!whiteTurn) {
+				blackCup.roll();
+				System.out.println(blackCup.toString());
+			} else {
+				whiteCup.roll();
+				System.out.println(whiteCup.toString());
+			}
+
+		}
 	}
 }
