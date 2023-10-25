@@ -4,17 +4,16 @@
  *
  */
 public class DiceCup {
+	private int player; //if positive then white, if negative then black
 	private int die1, die2;
-	private int[] availableMoves = {0, 0, 0, 0}; // this will be four numbers, though positions
+	private int[] availableMoves; // this will be four numbers, though positions
 								 //     2 and 3 will often be zero.
 	
-	public DiceCup()
+	public DiceCup(int player)
 	{
-		//--------------------
-		// TODO: insert your code here.
-		
-		//--------------------
-	}
+		availableMoves = new int[]{0, 0, 0, 0};
+		this.player = player;
+    }
 	/**
 	 * calculateAvailableMoves - based on the information stored in die1 and die2,
 	 * determines which moves could be made by the player and stores them in an
@@ -32,8 +31,6 @@ public class DiceCup {
 		int equalVariable = 0;
 		if (isDoubles(die1, die2)) {
 			equalVariable = die1;
-		} else {
-			equalVariable = 0;
 		}
 		availableMoves[0] = die1;
 		availableMoves[1] = die2;
@@ -56,6 +53,10 @@ public class DiceCup {
 		//--------------------
 		die1 = (int)(Math.random()*6) + 1;
 		die2 = (int)(Math.random()*6) + 1;
+		if (player < 0) {
+			die1 *= -1;
+			die2 *= -1;
+		}
 		calculateAvailableMoves();
 	}
 	/**
@@ -80,17 +81,21 @@ public class DiceCup {
 	{
 		String result = "";
 		String[] diceEmojis = {"", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"};
+		int[] moves = new int[availableMoves.length];
+		for (int i = 0; i < availableMoves.length; i++) {
+			moves[i] = Math.abs(availableMoves[i]);
+		}
 		//--------------------
 		// TODO: insert your code here.
 		for (int i = 0; i < 4; i++) {
-			if (availableMoves[i] != 0) {
-				result += diceEmojis[availableMoves[i]] + " ";
+			if (moves[i] != 0) {
+				result += diceEmojis[moves[i]] + " ";
 			}
 		}
 		result += ": ";
 		for (int i = 0; i < 4; i++) {
-			if (availableMoves[i] != 0) {
-				result += availableMoves[i] + " ";
+			if (moves[i] != 0) {
+				result += moves[i] + " ";
 			}
 		}
 
@@ -106,10 +111,12 @@ public class DiceCup {
 	public boolean isLegal(int amountToMove)
 	{
 		boolean legal = false;
-		//--------------------
-		// TODO: insert your code here.
-		
-		//--------------------
+		for (int i : availableMoves) {
+			if (i == amountToMove) {
+				legal = true;
+				break;
+			}
+		}
 		return legal;
 	}
 	/**
@@ -136,11 +143,12 @@ public class DiceCup {
 	 */
 	public void moveMade(int amountToMove)
 	{
-		//--------------------
-		// TODO: insert your code here.
-		
-		//--------------------
-	
+		for (int i : availableMoves) {
+			if (i == amountToMove) {
+				availableMoves[i] = 0;
+				break;
+			}
+		}
 	}
 	
 	/**
@@ -150,11 +158,13 @@ public class DiceCup {
 	 */
 	public boolean hasMovesLeft()
 	{
-		boolean hasMoves = true;
-		//--------------------
-		// TODO: insert your code here.
-		
-		//--------------------
+		boolean hasMoves = false;
+		for (int i : availableMoves) {
+			if (i != 0) {
+				hasMoves = true;
+				break;
+			}
+		}
 		return hasMoves;
 	}
 	
