@@ -178,15 +178,21 @@ public class Board {
 	/**
 	 * gameIsOver - determines whether either player has removed all 
 	 * his/her pieces from the board.
+	 * @team will be positive for white or negative for black
 	 * @return - whether (true/false) the game is over.
 	 */
-	public boolean gameIsOver()
-	{
-		boolean gameOver = false;
+	public boolean doesTeamWin(int team) {
+		boolean teamWins = true;
 		//--------------------
-		// TODO: Insert your code here
-		
-		//--------------------
-		return gameOver;
+        for (int i : boardArray) {
+            if (team > 0 && i > 0) {
+                teamWins = false;
+                break;
+            } else if (team < 0 && i < 0) {
+                teamWins = false;
+                break;
+            }
+        }
+		return teamWins;
 	}
 }
