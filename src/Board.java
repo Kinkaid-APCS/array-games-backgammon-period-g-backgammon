@@ -140,10 +140,14 @@ public class Board {
 	 */
 	public void makeMove(int startingSpace, int numSpacesToMove)
 	{
-		//--------------------
-		// TODO: insert your code here.
-		
-		//--------------------
+		if (numSpacesToMove > 0) {
+			boardArray[startingSpace] -= 1;
+			boardArray[startingSpace + numSpacesToMove] += 1;
+		}
+		if (numSpacesToMove < 0) {
+			boardArray[startingSpace] += 1;
+			boardArray[startingSpace + numSpacesToMove] -= 1;
+		}
 	}
 	
 	
