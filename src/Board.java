@@ -115,18 +115,37 @@ public class Board {
 	public boolean isLegal(int startingSpace, int numSpaces)
 	{
 		boolean legal = false;
+		boolean readyToRemove = true;
 		if (numSpaces > 0) {
-			if (boardArray[startingSpace + numSpaces] > -2) {
-				legal = true;
+			for (int i = 0; i < boardArray.length; i++) {
+                if (boardArray[i] > 0 && i < 19) {
+                    readyToRemove = false;
+                    break;
+                }
 			}
-		}
-		if (numSpaces < 0) {
-			if (boardArray[startingSpace + numSpaces] < 2) {
-				legal = true;
+			if (boardArray[startingSpace + numSpaces] == 25) {
+				legal = readyToRemove;
+			} else {
+				if (boardArray[startingSpace + numSpaces] > -2) {
+					legal = true;
+				}
+			}
+		} else {
+			for (int i = 0; i < boardArray.length; i++) {
+				if (boardArray[i] < 0 && i > 6) {
+					readyToRemove = false;
+					break;
+				}
+			}
+			if (boardArray[startingSpace + numSpaces] == 0) {
+				legal = readyToRemove;
+			} else {
+				if (boardArray[startingSpace + numSpaces] < 2) {
+					legal = true;
+				}
 			}
 		}
 		return legal;
-		
 	}
 	
 	/**
@@ -142,11 +161,16 @@ public class Board {
 	{
 		if (numSpacesToMove > 0) {
 			boardArray[startingSpace] -= 1;
-			boardArray[startingSpace + numSpacesToMove] += 1;
+			if (boardArray[startingSpace + numSpacesToMove] != 25) {
+				boardArray[startingSpace + numSpacesToMove] += 1;
+			}
+			//white moves
 		}
 		if (numSpacesToMove < 0) {
 			boardArray[startingSpace] += 1;
-			boardArray[startingSpace + numSpacesToMove] -= 1;
+			if (boardArray[startingSpace + numSpacesToMove] != 0) {
+				boardArray[startingSpace + numSpacesToMove] -= 1;
+			}
 		}
 	}
 	
