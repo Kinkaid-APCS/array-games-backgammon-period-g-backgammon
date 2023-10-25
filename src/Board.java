@@ -195,4 +195,17 @@ public class Board {
         }
 		return teamWins;
 	}
+
+	public boolean anySpacesAvailable(DiceCup player) {
+		boolean anyMoves = false;
+		for (int i : player.debugGetAvailableMoves()) {
+			for (int j = 0; j < boardArray.length; j++) {
+				if (isLegal(j, i)){
+					anyMoves = true;
+					break;
+				}
+			}
+		}
+		return anyMoves;
+	}
 }
