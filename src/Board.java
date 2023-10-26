@@ -116,14 +116,16 @@ public class Board {
 	{
 		boolean legal = false;
 		boolean readyToRemove = true;
-		if (numSpaces > 0) {
+		if (startingSpace + numSpaces > 25 || startingSpace + numSpaces < 0) {
+            readyToRemove = false;
+		} else if (numSpaces > 0) {
 			for (int i = 0; i < boardArray.length; i++) {
                 if (boardArray[i] > 0 && i < 19) {
                     readyToRemove = false;
                     break;
                 }
 			}
-			if (boardArray[startingSpace + numSpaces] == 25) {
+			if (startingSpace + numSpaces == 25) {
 				legal = readyToRemove;
 			} else {
 				if (boardArray[startingSpace + numSpaces] > -2) {
@@ -137,7 +139,7 @@ public class Board {
 					break;
 				}
 			}
-			if (boardArray[startingSpace + numSpaces] == 0) {
+			if (startingSpace + numSpaces == 0) {
 				legal = readyToRemove;
 			} else {
 				if (boardArray[startingSpace + numSpaces] < 2) {
@@ -161,14 +163,22 @@ public class Board {
 	{
 		if (numSpacesToMove > 0) {
 			boardArray[startingSpace] -= 1;
-			if (boardArray[startingSpace + numSpacesToMove] != 25) {
+			if (startingSpace + numSpacesToMove != 25) {
+				if (boardArray[startingSpace + numSpacesToMove] < 0) {
+					boardArray[startingSpace + numSpacesToMove] = 0;
+					boardArray[25] -= 1;
+				}
 				boardArray[startingSpace + numSpacesToMove] += 1;
 			}
 			//white moves
 		}
 		if (numSpacesToMove < 0) {
 			boardArray[startingSpace] += 1;
-			if (boardArray[startingSpace + numSpacesToMove] != 0) {
+			if (startingSpace + numSpacesToMove != 0) {
+				if (boardArray[startingSpace + numSpacesToMove] > 0) {
+					boardArray[startingSpace + numSpacesToMove] = 0;
+					boardArray[0] += 1;
+				}
 				boardArray[startingSpace + numSpacesToMove] -= 1;
 			}
 		}
@@ -181,14 +191,14 @@ public class Board {
 	 * @team will be positive for white or negative for black
 	 * @return - whether (true/false) the game is over.
 	 */
-	public boolean doesTeamWin(int team) {
+	public boolean doesTeamWin(DiceCup player) {
 		boolean teamWins = true;
 		//--------------------
         for (int i : boardArray) {
-            if (team > 0 && i > 0) {
+            if (player.player > 0 && i > 0) {
                 teamWins = false;
                 break;
-            } else if (team < 0 && i < 0) {
+            } else if (player.player < 0 && i < 0) {
                 teamWins = false;
                 break;
             }

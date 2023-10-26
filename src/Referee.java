@@ -14,6 +14,7 @@ public class Referee {
 	private DiceCup whiteCup;
 	private Board board;
 	private boolean whiteTurn;
+	private String winner;
 	/**
 	 * constructor - set up the board and players 
 	 */
@@ -36,46 +37,23 @@ public class Referee {
 	public void playGame()
 	{
 		while (continuePlaying) {
-			System.out.println(board.toString());
 			if(whiteTurn) {
-				System.out.println("White's Turn");
-				whiteCup.roll();
-				System.out.println(whiteCup.toString());
-				while (whiteCup.hasMovesLeft() && board.anySpacesAvailable(whiteCup, board)) {
-					int move = whichMove();
-					int location = whichLocation(whiteCup);
-					while (!board.isLegal(location, move) && !whiteCup.isLegal(move)) {
-						System.out.println("Not a valid move.");
-						move = whichMove();
-						location = whichLocation(whiteCup);
-					}
-					board.makeMove(location, move);
-				}
+				turnOrder(whiteCup);
 			} else {
-				System.out.println("Brown's Turn"); //actually black, but brown looks better
-				blackCup.roll();
-				System.out.println(blackCup.toString());
-				while (blackCup.hasMovesLeft() && board.anySpacesAvailable(blackCup, board)) {
-					int move = whichMove();
-					int location = whichLocation(blackCup);
-					while (!board.isLegal(location, move) && !blackCup.isLegal(move)) {
-						System.out.println("Not a valid move.");
-						move = whichMove();
-						location = whichLocation(blackCup);
-					}
-					board.makeMove(location, move);
-				}
+				turnOrder(blackCup);
 			}
 
 		}
 	}
 
-	public int whichMove() {
+	public int whichMove(DiceCup player) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Choose move: ");
-		int input = sc.nextInt();
-		sc.close();
-		return input;
+		if (player.player > 0) {
+			return sc.nextInt();
+		} else {
+			return -1 * sc.nextInt();
+		}
 	}
 	//parameter player is positive or negative based on whether white or black is going
 	public int whichLocation(DiceCup player) {
@@ -84,14 +62,44 @@ public class Referee {
 			loc = 0;
 			System.out.println("You are playing from the bar.");
 		} else if (player.player < 0 && board.boardArray[25] < 0) {
-			loc = 0;
+			loc = 25;
 			System.out.println("You are playing from the bar.");
 		} else {
 			Scanner sc = new Scanner(System.in);
 			System.out.println("Choose location: ");
 			loc = sc.nextInt();
-			sc.close();
 		}
 		return loc;
+	}
+
+	public void turnOrder (DiceCup player) {
+		player.roll();
+		while (player.hasMovesLeft() && board.anySpacesAvailable(player, board)) {
+			System.out.println(board.toString());
+			if (whiteTurn) {
+				System.out.println("White's Turn");
+			} else {
+				System.out.println("Black's Turn");
+			}
+			System.out.println(player.toString());
+			int move = whichMove(player);
+			int location = whichLocation(player);
+			while (!(board.isLegal(location, move) && player.isLegal(move))) {
+				System.out.println("Not a valid move.");
+				move = whichMove(player);
+				location = whichLocation(player);
+			}
+			board.makeMove(location, move);
+			player.moveMade(move);
+		}
+		if (board.doesTeamWin(player)) {
+			continuePlaying = false;
+			if (player.player > 0) {
+				winner = "WHITE WINS!!!";
+			} else {
+				winner = "BLACK WINS!!!";
+			}
+		}
+		whiteTurn = !whiteTurn;
 	}
 }

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * The dice cup is a class that takes care of rolling two dice, determining whether 
  * doubles were rolled, and keeping track of which moving numbers have been used.
@@ -143,8 +145,8 @@ public class DiceCup {
 	 */
 	public void moveMade(int amountToMove)
 	{
-		for (int i : availableMoves) {
-			if (i == amountToMove) {
+		for (int i = 0; i < availableMoves.length; i++) {
+			if (availableMoves[i] == amountToMove) {
 				availableMoves[i] = 0;
 				break;
 			}
