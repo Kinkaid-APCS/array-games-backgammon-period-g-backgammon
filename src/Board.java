@@ -80,7 +80,7 @@ public class Board {
 		boolean readyToRemove = true;
 		if ((player.player > 0 && boardArray[startingSpace] > 0) || (player.player < 0 && boardArray[startingSpace] < 0)) {
 			if (startingSpace + numSpaces > 25 || startingSpace + numSpaces < 0) {
-				readyToRemove = false;
+				readyToRemove = false; //stand in code
 			} else if (numSpaces > 0) {
 				for (int i = 0; i < boardArray.length; i++) {
 					if (boardArray[i] > 0 && i < 19) {
@@ -167,10 +167,16 @@ public class Board {
 		if (player.player > 0 && board.boardArray[0] > 0) {
 			for (int i: player.debugGetAvailableMoves()) {
 				anyMoves = isLegal(0, i, player);
+				if (anyMoves) {
+					break;
+				}
 			}
 		} else if (player.player < 0 && board.boardArray[25] < 0) {
 			for (int i: player.debugGetAvailableMoves()) {
 				anyMoves = isLegal(25, i, player);
+				if (anyMoves) {
+					break;
+				}
 			}
 		} else {
 			for (int i : player.debugGetAvailableMoves()) {

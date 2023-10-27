@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  * The Referee class keeps track of the board, any dice, and all interactions
@@ -47,17 +48,21 @@ public class Referee {
 	}
 
 	public int whichMove(DiceCup player) {
+		int move = -1;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Choose move: ");
-		if (player.player > 0) {
-			return sc.nextInt();
-		} else {
-			return -1 * sc.nextInt();
+		while (move < 1 || move > 6) {
+			System.out.println("Choose move: ");
+			move = sc.nextInt();
 		}
+		if (player.player < 0) {
+			move = move * -1;
+		}
+		return move;
 	}
 	//parameter player is positive or negative based on whether white or black is going
 	public int whichLocation(DiceCup player) {
-		int loc;
+		int loc = -1;
+		boolean goodAnswer = false;
 		if (player.player > 0 && board.boardArray[0] > 0) {
 			loc = 0;
 			System.out.println("You are playing from the bar.");
@@ -66,14 +71,32 @@ public class Referee {
 			System.out.println("You are playing from the bar.");
 		} else {
 			Scanner sc = new Scanner(System.in);
-			System.out.println("Choose location: ");
-			loc = sc.nextInt();
+			while (loc < 1 || loc > 24 || !goodAnswer) {
+
+				try {
+					System.out.println("Choose location: ");
+					loc = sc.nextInt();
+					goodAnswer = true;
+				} catch (InputMismatchException imExp) {
+					goodAnswer = false;
+					sc.nextLine();
+				}
+			}
 		}
 		return loc;
 	}
 
 	public void turnOrder (DiceCup player) {
 		player.roll();
+		if (!board.anySpacesAvailable(player, board)) {
+			if (whiteTurn) {
+				System.out.println("White's Turn");
+			} else {
+				System.out.println("Black's Turn");
+			}
+			System.out.println(player.toString());
+			System.out.println("No valid moves. (Turn Skipped)");
+		}
 		while (player.hasMovesLeft() && board.anySpacesAvailable(player, board)) {
 			System.out.println(board.toString());
 			if (whiteTurn) {
@@ -82,12 +105,12 @@ public class Referee {
 				System.out.println("Black's Turn");
 			}
 			System.out.println(player.toString());
-			int move = whichMove(player);
 			int location = whichLocation(player);
+			int move = whichMove(player);
 			while (!(board.isLegal(location, move, player) && player.isLegal(move))) {
 				System.out.println("Not a valid move.");
-				move = whichMove(player);
 				location = whichLocation(player);
+				move = whichMove(player);
 			}
 			board.makeMove(location, move);
 			player.moveMade(move);
