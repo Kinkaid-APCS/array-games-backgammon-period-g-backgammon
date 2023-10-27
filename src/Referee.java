@@ -84,7 +84,7 @@ public class Referee {
 			System.out.println(player.toString());
 			int move = whichMove(player);
 			int location = whichLocation(player);
-			while (!(board.isLegal(location, move) && player.isLegal(move))) {
+			while (!(board.isLegal(location, move, player) && player.isLegal(move))) {
 				System.out.println("Not a valid move.");
 				move = whichMove(player);
 				location = whichLocation(player);

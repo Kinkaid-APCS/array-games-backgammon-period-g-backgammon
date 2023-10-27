@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * The dice cup is a class that takes care of rolling two dice, determining whether 
  * doubles were rolled, and keeping track of which moving numbers have been used.
@@ -22,7 +20,6 @@ public class DiceCup {
 	 * array. This is pretty straightforward, if you don't roll doubles.
 	 * If the dice are doubles, then the player gets 4 iterations of the value of
 	 *  the faces on the dice.
-	 * 
 	 * So if die1 = 5 and die2 = 2, then availableMoves is [5,2,0,0]. (in any order)
 	 * If die1 = 3 and die3 = 3, then availableMoves is [3,3,3,3]. 
 	 */
@@ -81,7 +78,7 @@ public class DiceCup {
 	 */
 	public String toString()
 	{
-		String result = "";
+		StringBuilder result = new StringBuilder();
 		String[] diceEmojis = {"", "⚀", "⚁", "⚂", "⚃", "⚄", "⚅"};
 		int[] moves = new int[availableMoves.length];
 		for (int i = 0; i < availableMoves.length; i++) {
@@ -91,25 +88,21 @@ public class DiceCup {
 		// TODO: insert your code here.
 		for (int i = 0; i < 4; i++) {
 			if (moves[i] != 0) {
-				result += diceEmojis[moves[i]] + " ";
+				result.append(diceEmojis[moves[i]]).append(" ");
 			}
 		}
-		result += ": ";
+		result.append(": ");
 		for (int i = 0; i < 4; i++) {
 			if (moves[i] != 0) {
-				result += moves[i] + " ";
+				result.append(moves[i]).append(" ");
 			}
 		}
 
 		//--------------------
-		return result;
+		return result.toString();
 		
 	}
-	/**
-	 * isLegal - given a proposed move, determines whether this number is an option.
-	 * @param amountToMove
-	 * @return - whether the player can move this amount.
-	 */
+
 	public boolean isLegal(int amountToMove)
 	{
 		boolean legal = false;
@@ -121,20 +114,10 @@ public class DiceCup {
 		}
 		return legal;
 	}
-	/**
-	 * isDoubles - indicates whether the two dice match.
-	 * @return
-	 */
+
 	public boolean isDoubles(int die1, int die2)
 	{
-		boolean doubles = false;
-		//--------------------
-		// TODO: insert your code here.
-		if (die1 == die2) {
-			doubles = true;
-		}
-		//--------------------
-		return doubles;
+		return die1 == die2;
 	}
 	
 	/**
@@ -169,26 +152,7 @@ public class DiceCup {
 		}
 		return hasMoves;
 	}
-	
-	//----------------------
-	// FOR TESTING & DEBUGGING ONLY
-	/**
-	 * sets the dice to a and b, and calculates the availableMoves.
-	 * @param a
-	 * @param b
-	 */
-	public void debugSetDice(int a, int b)
-	{
-		die1=a;
-		die2=b;
-		calculateAvailableMoves();
-	}
-	public int[] debugGetDice()
-	{
-		int[] dice = {die1, die2};
-		return dice;
-	}
-	
+
 	public int[] debugGetAvailableMoves()
 	{
 		return availableMoves;

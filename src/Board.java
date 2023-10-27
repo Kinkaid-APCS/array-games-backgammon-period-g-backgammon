@@ -16,11 +16,11 @@ public class Board {
 	// the "negative" team is trying to move its pieces to smaller numbers,
 	// then moving them to 0 or less actually removes them from the board - they
 	// don't go to position 0. On the other hand if a "positive-moving" piece is
-	// captured, it goes to position 0, the farthest point from it's goal of 25 or
+	// captured, it goes to position 0, the farthest point from its goal of 25 or
 	// more.
 	public int[] boardArray;
-	private String blackChar;
-	private String whiteChar;
+	private final String blackChar;
+	private final String whiteChar;
 	/**
 	 * constructor - set up the starting locations of the pieces.
 	 */
@@ -49,23 +49,7 @@ public class Board {
 			}
 		}
 	}
-	
-	/**
-	 * toString - create a string representing the state of the board.
-	 * @return a string containing the board state.
-	 * for example, it might look like:
-	 * 0 (BAR) O
-	 * 1
-	 * 2 OO
-	 * 3 OOO
-	 * 4 XX
-	 * 5 
-	 * 6 XXXXX
-	 * ....
-	 * 23 O
-	 * 24 XX
-	 * 25 (BAR) XX
-	 */
+
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
@@ -89,76 +73,48 @@ public class Board {
 		//--------------------
 		return result.toString();
 	}
-	
-	/**
-	 * playerHasPieceAtLocation - determines whether the player has at 
-	 * least one chip at the given space.
-	 * @param location - the number of the space in question.
-	 * @return whether (true/false) the player has a chip of his/her own 
-	 * color at this space.
-	 */
-	public int howManyPieceAtLocation(int location)
-	{
-		return boardArray[location];
-	}
-	
-	/**
-	 * isLegal - determines whether a chip at the given space can move
-	 * the desired number of spaces
-	 * @param - startingSpace
-	 * @param - numSpacesToMove (this is a positive number, but might be 
-	 * a move up or down, depending on what chip is in the starting space)
-	 * @return whether (true/false) the player is allowed to make such a move.
-	 * precondition: yes, there's at least one chip in the space.
-	 * postcondition: the board is unchanged.
-	 */
-	public boolean isLegal(int startingSpace, int numSpaces)
+
+	public boolean isLegal(int startingSpace, int numSpaces, DiceCup player)
 	{
 		boolean legal = false;
 		boolean readyToRemove = true;
-		if (startingSpace + numSpaces > 25 || startingSpace + numSpaces < 0) {
-            readyToRemove = false;
-		} else if (numSpaces > 0) {
-			for (int i = 0; i < boardArray.length; i++) {
-                if (boardArray[i] > 0 && i < 19) {
-                    readyToRemove = false;
-                    break;
-                }
-			}
-			if (startingSpace + numSpaces == 25) {
-				legal = readyToRemove;
-			} else {
-				if (boardArray[startingSpace + numSpaces] > -2) {
-					legal = true;
+		if ((player.player > 0 && boardArray[startingSpace] > 0) || (player.player < 0 && boardArray[startingSpace] < 0)) {
+			if (startingSpace + numSpaces > 25 || startingSpace + numSpaces < 0) {
+				readyToRemove = false;
+			} else if (numSpaces > 0) {
+				for (int i = 0; i < boardArray.length; i++) {
+					if (boardArray[i] > 0 && i < 19) {
+						readyToRemove = false;
+						break;
+					}
 				}
-			}
-		} else {
-			for (int i = 0; i < boardArray.length; i++) {
-				if (boardArray[i] < 0 && i > 6) {
-					readyToRemove = false;
-					break;
+				if (startingSpace + numSpaces == 25) {
+					legal = readyToRemove;
+				} else {
+					if (boardArray[startingSpace + numSpaces] > -2) {
+						legal = true;
+					}
 				}
-			}
-			if (startingSpace + numSpaces == 0) {
-				legal = readyToRemove;
 			} else {
-				if (boardArray[startingSpace + numSpaces] < 2) {
-					legal = true;
+				for (int i = 0; i < boardArray.length; i++) {
+					if (boardArray[i] < 0 && i > 6) {
+						readyToRemove = false;
+						break;
+					}
+				}
+				if (startingSpace + numSpaces == 0) {
+					legal = readyToRemove;
+				} else {
+					if (boardArray[startingSpace + numSpaces] < 2) {
+						legal = true;
+					}
 				}
 			}
 		}
 		return legal;
 	}
 	
-	/**
-	 * makeMove - moves one chip from the given space by the specified amount;
-	 * @param - startingSpace
-	 * @param - numSpacesToMove (this is a positive number, but might be 
-	 * a move up or down, depending on what chip is in the starting space)
-	 * precondition: there is a chip at the starting space
-	 * postcondition: the chip may be moved to a different space, or off the board.
-	 * If the chip lands on a single enemy piece, that piece is sent to its bar.
-	 */
+
 	public void makeMove(int startingSpace, int numSpacesToMove)
 	{
 		if (numSpacesToMove > 0) {
@@ -210,11 +166,11 @@ public class Board {
 		boolean anyMoves = false;
 		if (player.player > 0 && board.boardArray[0] > 0) {
 			for (int i: player.debugGetAvailableMoves()) {
-				anyMoves = isLegal(0, i);
+				anyMoves = isLegal(0, i, player);
 			}
 		} else if (player.player < 0 && board.boardArray[25] < 0) {
 			for (int i: player.debugGetAvailableMoves()) {
-				anyMoves = isLegal(25, i);
+				anyMoves = isLegal(25, i, player);
 			}
 		} else {
 			for (int i : player.debugGetAvailableMoves()) {
@@ -229,7 +185,7 @@ public class Board {
 							j++;
 						}
 					}
-					if (isLegal(j, i)) {
+					if (isLegal(j, i, player)) {
 						anyMoves = true;
 						break;
 					}
