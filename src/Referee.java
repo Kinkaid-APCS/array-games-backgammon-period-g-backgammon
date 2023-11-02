@@ -49,10 +49,17 @@ public class Referee {
 
 	public int whichMove(DiceCup player) {
 		int move = -1;
+		boolean goodAnswer = false;
 		Scanner sc = new Scanner(System.in);
-		while (move < 1 || move > 6) {
-			System.out.println("Choose move: ");
-			move = sc.nextInt();
+		while (move < 1 || move > 6 || !goodAnswer) {
+			try {
+				System.out.println("Choose move: ");
+				move = sc.nextInt();
+				goodAnswer = true;
+			} catch (InputMismatchException imExp) {
+				goodAnswer = false;
+				sc.nextLine();
+			}
 		}
 		if (player.player < 0) {
 			move = move * -1;
@@ -72,7 +79,6 @@ public class Referee {
 		} else {
 			Scanner sc = new Scanner(System.in);
 			while (loc < 1 || loc > 24 || !goodAnswer) {
-
 				try {
 					System.out.println("Choose location: ");
 					loc = sc.nextInt();
@@ -88,7 +94,7 @@ public class Referee {
 
 	public void turnOrder (DiceCup player) {
 		player.roll();
-		if (!board.anySpacesAvailable(player, board)) {
+		if (!board.anySpacesAvailable(player, board) && continuePlaying) {
 			if (whiteTurn) {
 				System.out.println("White's Turn");
 			} else {
@@ -118,9 +124,9 @@ public class Referee {
 		if (board.doesTeamWin(player)) {
 			continuePlaying = false;
 			if (player.player > 0) {
-				winner = "WHITE WINS!!!";
+				System.out.println("WHITE WINS!!!");
 			} else {
-				winner = "BLACK WINS!!!";
+				System.out.println("BLACK WINS!!!");
 			}
 		}
 		whiteTurn = !whiteTurn;

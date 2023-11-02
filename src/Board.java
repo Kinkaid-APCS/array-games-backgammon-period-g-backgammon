@@ -21,6 +21,8 @@ public class Board {
 	public int[] boardArray;
 	private final String blackChar;
 	private final String whiteChar;
+	private static final String ANSI_COLOR = "\u001b[48;5;53m";
+	private static final String ANSI_RESET = "\u001B[0m";
 	/**
 	 * constructor - set up the starting locations of the pieces.
 	 */
@@ -53,14 +55,66 @@ public class Board {
 	public String toString()
 	{
 		StringBuilder result = new StringBuilder();
-		String bar;
+		String extra;
+		String extra2;
+		String color;
 		//--------------------
-		for (int i = 0; i < boardArray.length; i ++) {
-			bar = "";
-			if (i == 0 || i == 25) {
-				bar = "(BAR) ";
+//		for (int i = 0; i < boardArray.length; i ++) {
+//			extra = "";
+//			color = "";
+//			if (i == 0) {
+//				extra = " (BAR) ";
+//			}
+//			if (i == 25) {
+//				extra = "(BAR) ";
+//			}
+//			if (i < 7 && i > 0) {
+//				extra = " (🟤HOME) ";
+//			}
+//			if (i < 25 && i > 18) {
+//				extra = "(⚪️HOME) ";
+//			}
+//			if (i > 6 && i < 10) {
+//				extra = " (------) ";
+//			}
+//			if (i > 9 && i < 19) {
+//				extra = "(------) ";
+//			}
+//			if (i < 7 && i > 0) {
+//				color = (ANSI_COLOR);
+//			}
+//			if (i < 25 && i > 18) {
+//				color = ANSI_COLOR;
+//			}
+//			//result.append("\n ").append(color).append(i).append(ANSI_RESET).append(" ").append(extra);
+//			result.append("\n ").append(i).append(" ").append(extra);
+//			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
+//				if (boardArray[i] > 0) {
+//					result.append(whiteChar);
+//				} else {
+//					result.append(blackChar);
+//				}
+//			}
+//		}
+
+		for (int i = 0; i < boardArray.length/2; i ++) {
+			extra = "";
+			extra2 = "";
+			color = "";
+			if (i == 0) {
+				extra = " (BAR)    ";
+				extra2 = "(BAR)    ";
+			} else if (i == 6) {
+				extra = " (🟤HOME) ";
+				extra2 = "(⚪️HOME) ";
+			} else if (i > 9) {
+				extra = "(------) ";
+				extra2 = "(------) ";
+			} else {
+				extra = " (------) ";
+				extra2 = "(------) ";
 			}
-			result.append("\n ").append(i).append(" ").append(bar);
+			result.append("\n ").append(i).append(" ").append(extra);
 			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
 				if (boardArray[i] > 0) {
 					result.append(whiteChar);
@@ -68,8 +122,21 @@ public class Board {
 					result.append(blackChar);
 				}
 			}
+			for (int k = 0; k < 15 - Math.abs(boardArray[i]); k++) {
+				result.append("  ");
+			}
+			if (boardArray[i] == 0) {
+				result.append(" ");
+			}
+			result.append(25 - i).append(" ").append(extra2);
+			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
+				if (boardArray[25 - i] > 0) {
+					result.append(whiteChar);
+				} else {
+					result.append(blackChar);
+				}
+			}
 		}
-		
 		//--------------------
 		return result.toString();
 	}
@@ -166,34 +233,40 @@ public class Board {
 		boolean anyMoves = false;
 		if (player.player > 0 && board.boardArray[0] > 0) {
 			for (int i: player.debugGetAvailableMoves()) {
-				anyMoves = isLegal(0, i, player);
+				if (i != 0) {
+					anyMoves = isLegal(0, i, player);
+				}
 				if (anyMoves) {
 					break;
 				}
 			}
 		} else if (player.player < 0 && board.boardArray[25] < 0) {
 			for (int i: player.debugGetAvailableMoves()) {
-				anyMoves = isLegal(25, i, player);
+				if (i != 0) {
+					anyMoves = isLegal(25, i, player);
+				}
 				if (anyMoves) {
 					break;
 				}
 			}
 		} else {
 			for (int i : player.debugGetAvailableMoves()) {
-				for (int j = 0; j < boardArray.length; j++) {
-					if (player.player > 0) {
-						while (boardArray[j] < 1 && j < 25) {
-							j++;
+				if (i != 0) {
+					for (int j = 0; j < boardArray.length; j++) {
+						if (player.player > 0) {
+							while (boardArray[j] < 1 && j < 25) {
+								j++;
+							}
 						}
-					}
-					if (player.player < 0) {
-						while (boardArray[j] > -1 && j < 25) {
-							j++;
+						if (player.player < 0) {
+							while (boardArray[j] > -1 && j < 25) {
+								j++;
+							}
 						}
-					}
-					if (isLegal(j, i, player)) {
-						anyMoves = true;
-						break;
+						if (isLegal(j, i, player)) {
+							anyMoves = true;
+							break;
+						}
 					}
 				}
 			}
