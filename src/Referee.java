@@ -20,7 +20,7 @@ public class Referee {
 	 * constructor - set up the board and players 
 	 */
 	// TODO: you write the Referee's constructor
-	public Referee() {
+	public void Referee() {
 		continuePlaying = true;
 		blackCup = new DiceCup(-1);
 		whiteCup = new DiceCup(1);
