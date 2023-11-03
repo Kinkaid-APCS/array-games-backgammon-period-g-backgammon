@@ -59,61 +59,34 @@ public class Board {
 		String extra2;
 		String color;
 		//--------------------
-//		for (int i = 0; i < boardArray.length; i ++) {
-//			extra = "";
-//			color = "";
-//			if (i == 0) {
-//				extra = " (BAR) ";
-//			}
-//			if (i == 25) {
-//				extra = "(BAR) ";
-//			}
-//			if (i < 7 && i > 0) {
-//				extra = " (🟤HOME) ";
-//			}
-//			if (i < 25 && i > 18) {
-//				extra = "(⚪️HOME) ";
-//			}
-//			if (i > 6 && i < 10) {
-//				extra = " (------) ";
-//			}
-//			if (i > 9 && i < 19) {
-//				extra = "(------) ";
-//			}
-//			if (i < 7 && i > 0) {
-//				color = (ANSI_COLOR);
-//			}
-//			if (i < 25 && i > 18) {
-//				color = ANSI_COLOR;
-//			}
-//			//result.append("\n ").append(color).append(i).append(ANSI_RESET).append(" ").append(extra);
-//			result.append("\n ").append(i).append(" ").append(extra);
-//			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
-//				if (boardArray[i] > 0) {
-//					result.append(whiteChar);
-//				} else {
-//					result.append(blackChar);
-//				}
-//			}
-//		}
-
-		for (int i = 0; i < boardArray.length/2; i ++) {
+		for (int i = 0; i < boardArray.length; i ++) {
 			extra = "";
-			extra2 = "";
 			color = "";
 			if (i == 0) {
-				extra = " (BAR)    ";
-				extra2 = "(BAR)    ";
-			} else if (i == 6) {
-				extra = " (🟤HOME) ";
-				extra2 = "(⚪️HOME) ";
-			} else if (i > 9) {
-				extra = "(------) ";
-				extra2 = "(------) ";
-			} else {
-				extra = " (------) ";
-				extra2 = "(------) ";
+				extra = " (BAR) ";
 			}
+			if (i == 25) {
+				extra = "(BAR) ";
+			}
+			if (i < 7 && i > 0) {
+				extra = " (🟤HOME) ";
+			}
+			if (i < 25 && i > 18) {
+				extra = "(⚪️HOME) ";
+			}
+			if (i > 6 && i < 10) {
+				extra = " (------) ";
+			}
+			if (i > 9 && i < 19) {
+				extra = "(------) ";
+			}
+			if (i < 7 && i > 0) {
+				color = (ANSI_COLOR);
+			}
+			if (i < 25 && i > 18) {
+				color = ANSI_COLOR;
+			}
+			//result.append("\n ").append(color).append(i).append(ANSI_RESET).append(" ").append(extra);
 			result.append("\n ").append(i).append(" ").append(extra);
 			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
 				if (boardArray[i] > 0) {
@@ -122,22 +95,48 @@ public class Board {
 					result.append(blackChar);
 				}
 			}
-			for (int k = 0; k < 15 - Math.abs(boardArray[i]); k++) {
-				result.append("  ");
-			}
-			if (boardArray[i] == 0) {
-				result.append(" ");
-			}
-			result.append(25 - i).append(" ").append(extra2);
-			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
-				if (boardArray[25 - i] > 0) {
-					result.append(whiteChar);
-				} else {
-					result.append(blackChar);
-				}
-			}
 		}
-		//--------------------
+
+//		for (int i = 0; i < boardArray.length/2; i ++) {
+//			extra = "";
+//			extra2 = "";
+//			color = "";
+//			if (i == 0) {
+//				extra = " (BAR)    ";
+//				extra2 = "(BAR)    ";
+//			} else if (i == 6) {
+//				extra = " (🟤HOME) ";
+//				extra2 = "(⚪️HOME) ";
+//			} else if (i > 9) {
+//				extra = "(------) ";
+//				extra2 = "(------) ";
+//			} else {
+//				extra = " (------) ";
+//				extra2 = "(------) ";
+//			}
+//			result.append("\n ").append(i).append(" ").append(extra);
+//			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
+//				if (boardArray[i] > 0) {
+//					result.append(whiteChar);
+//				} else {
+//					result.append(blackChar);
+//				}
+//			}
+//			for (int k = 0; k < 15 - Math.abs(boardArray[i]); k++) {
+//				result.append("  ");
+//			}
+//			if (boardArray[i] == 0) {
+//				result.append(" ");
+//			}
+//			result.append(25 - i).append(" ").append(extra2);
+//			for (int j = 0; j < Math.abs(boardArray[i]); j++) {
+//				if (boardArray[25 - i] > 0) {
+//					result.append(whiteChar);
+//				} else {
+//					result.append(blackChar);
+//				}
+//			}
+//		}
 		return result.toString();
 	}
 
